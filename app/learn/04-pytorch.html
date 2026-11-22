@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<meta name="description" content="Tensors, nn.Module, the training loop.">
+<title>PyTorch | Pit Wall ML</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/learn.css">
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+</head>
+<body class="learn">
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+  <aside class="sidenav" id="sidenav"><div class="side-head"><a class="brand" href="/" aria-label="Pit Wall ML"><span class="logo" aria-hidden="true">PW</span><span class="brand-text">Pit Wall ML</span></a></div><label class="side-search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"/></svg><input type="search" placeholder="Search" aria-label="Search pages and articles" autocomplete="off"></label><div class="side-scroll"><nav class="nav-list" aria-label="Main"><a class="nav-link" href="/" data-tip="Dashboard"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="label">Dashboard</span></a><a class="nav-link" href="/learn" aria-current="page" data-tip="Learn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zm4 3h7m-7 4h7"/></svg><span class="label">Learn</span></a><a class="nav-link" href="/quiz" data-gated data-tip="Quiz"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.2c-.8.5-1.1 1-1.1 1.8M12 17.5v.01M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span class="label">Quiz</span></a><a class="nav-link" href="/math" data-gated data-tip="Math"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5v14M6 19l12-14"/></svg><span class="label">Math</span></a><a class="nav-link" href="/arena" data-gated data-tip="Arena"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 7 3 12l5 5m8-10 5 5-5 5M14 4l-4 16"/></svg><span class="label">Arena</span></a><a class="nav-link" href="/leaderboard" data-gated data-tip="Leaderboard"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 20V10h4v10zm5 0V4h4v16zm5 0v-7h4v7z"/></svg><span class="label">Leaderboard</span></a><a class="nav-link" href="/profile" data-gated data-tip="Profile"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-8 9a8 8 0 0 1 16 0z"/></svg><span class="label">Profile</span></a></nav><details class="nav-group" open><summary>Study notes</summary><ul class="nav-sub"><li><a href="/learn/01-machine-learning">Machine Learning</a></li><li><a href="/learn/02-deep-learning">Deep Learning</a></li><li><a href="/learn/03-nlp">Natural Language Processing</a></li><li><a href="/learn/04-pytorch" aria-current="page">PyTorch</a><ol class="toc"><li class="toc-l2"><a href="#41-what-is-pytorch">4.1 What is PyTorch?</a></li><li class="toc-l2"><a href="#42-tensor">4.2 Tensor</a></li><li class="toc-l2"><a href="#43-building-a-neural-network">4.3 Building a Neural Network</a></li><li class="toc-l2"><a href="#44-training-loop">4.4 Training Loop</a></li><li class="toc-l2"><a href="#45-other-things-you-must-understand">4.5 Other things you must understand</a></li></ol></li><li><a href="/learn/05-tensorflow-keras">TensorFlow and Keras</a></li><li><a href="/learn/06-math-formulas">Math formulas</a></li><li><a href="/learn/07-math-priorities">Math priorities</a></li><li><a href="/learn/08-cheat-sheet">Formula cheat sheet</a></li><li><a href="/learn/09-tools-and-implementation">Tools and implementation</a></li><li><a href="/learn/10-mini-projects">Mini projects</a></li><li><a href="/learn/11-roadmap">Checklist and roadmap</a></li></ul></details></div></aside>
+  <div class="content">
+    <header class="pagehead" id="pagehead"><button class="menu-btn" type="button" data-nav-toggle aria-controls="sidenav" aria-expanded="false" aria-label="Open menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><a class="back" href="/learn" aria-label="Learn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></a><p class="pagehead-title">PyTorch</p></header>
+    <div class="shell">
+      <main id="main" tabindex="-1">
+        <article lang="en">
+          <h1>PyTorch</h1>
+          <p class="meta"><span>Estimate: 2-3 hours</span><span>&#8776; 2 min read</span></p>
+          <p class="prereq"><strong>Prerequisites:</strong> <a href="/learn/02-deep-learning">Deep Learning</a></p>
+          <div class="prose">
+<h2 id="41-what-is-pytorch">4.1 What is PyTorch?</h2>
+<p>PyTorch is an open-source framework for building and training neural
+networks in Python.</p>
+<p>PyTorch is popular for research, experimentation, and developing deep
+learning models.</p>
+<p>Main concepts:</p>
+<ul>
+<li>Tensor.</li>
+<li>Autograd.</li>
+<li>Neural Network.</li>
+<li>Dataset and DataLoader.</li>
+<li>Loss Function.</li>
+<li>Optimizer.</li>
+<li>GPU acceleration.</li>
+</ul>
+<h2 id="42-tensor">4.2 Tensor</h2>
+<p>A tensor is a multidimensional data structure.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table, scroll to see all columns"><table>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scalar</td>
+<td>5</td>
+</tr>
+<tr>
+<td>Vector</td>
+<td>[1, 2, 3]</td>
+</tr>
+<tr>
+<td>Matrix</td>
+<td>[[1,2],[3,4]]</td>
+</tr>
+<tr>
+<td>3D Tensor</td>
+<td>Batch of images</td>
+</tr>
+<tr>
+<td>4D Tensor</td>
+<td>Batches of images</td>
+</tr>
+</tbody>
+</table></div>
+<p>Implementation example:</p>
+<pre><code class="language-python">import torch
+
+x = torch.tensor([1, 2, 3])
+
+print(x)
+print(x.shape)
+print(x.dtype)
+</code></pre>
+<h2 id="43-building-a-neural-network">4.3 Building a Neural Network</h2>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+
+class NeuralNetwork(nn.Module):
+    def __init__(self):
+        super().__init__()
+
+        self.layers = nn.Sequential(
+            nn.Linear(10, 64),
+            nn.ReLU(),
+            nn.Linear(64, 32),
+            nn.ReLU(),
+            nn.Linear(32, 1)
+        )
+
+    def forward(self, x):
+        return self.layers(x)
+
+model = NeuralNetwork()
+</code></pre>
+<p>Explanation:</p>
+<ul>
+<li><code>nn.Module</code>: the base class for neural networks.</li>
+<li><code>nn.Linear</code>: a fully connected layer.</li>
+<li><code>nn.ReLU</code>: an activation function.</li>
+<li><code>forward()</code>: the forward propagation flow.</li>
+</ul>
+<h2 id="44-training-loop">4.4 Training Loop</h2>
+<p>This is one of the parts you must master.</p>
+<pre><code class="language-python">import torch
+import torch.nn as nn
+
+model = NeuralNetwork()
+
+criterion = nn.MSELoss()
+optimizer = torch.optim.Adam(
+    model.parameters(),
+    lr=0.001
+)
+
+for epoch in range(100):
+
+    # Forward pass
+    predictions = model(X_train)
+
+    # Calculate loss
+    loss = criterion(predictions, y_train)
+
+    # Reset gradients
+    optimizer.zero_grad()
+
+    # Backpropagation
+    loss.backward()
+
+    # Update weights
+    optimizer.step()
+
+    print(epoch, loss.item())
+</code></pre>
+<p>The four most important steps:</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table, scroll to see all columns"><table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>model(X)</code></td>
+<td>Forward propagation</td>
+</tr>
+<tr>
+<td><code>criterion()</code></td>
+<td>Computes the loss</td>
+</tr>
+<tr>
+<td><code>loss.backward()</code></td>
+<td>Computes the gradients</td>
+</tr>
+<tr>
+<td><code>optimizer.step()</code></td>
+<td>Updates the parameters</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>optimizer.zero_grad()</code> is needed because PyTorch accumulates gradients
+by default.</p>
+<p>Implementation notes:</p>
+<ul>
+<li>Make sure <code>X_train</code> and <code>y_train</code> have the right data type and shape.</li>
+<li>For classification, choose a suitable loss, for example <code>nn.CrossEntropyLoss()</code> for multiclass classification with logits.</li>
+<li>The training loop above is a simple illustration; a real implementation usually uses mini-batches through a <code>DataLoader</code>, a validation loop, and checkpointing.</li>
+</ul>
+<h2 id="45-other-things-you-must-understand">4.5 Other things you must understand</h2>
+<ul>
+<li><code>model.train()</code>: enables training behaviour.</li>
+<li><code>model.eval()</code>: enables evaluation behaviour.</li>
+<li><code>torch.no_grad()</code>: disables gradient tracking.</li>
+<li><code>Dataset</code>: defines how the data is accessed.</li>
+<li><code>DataLoader</code>: handles batching and loading data.</li>
+<li><code>model.to(device)</code>: moves the model to the CPU or GPU.</li>
+</ul>
+
+          </div>
+        </article>
+        <nav class="pager" aria-label="Previous / Next"><a class="pager-link prev" href="/learn/03-nlp"><span class="pager-label">Previous</span><span class="pager-title">Natural Language Processing</span></a><a class="pager-link next" href="/learn/05-tensorflow-keras"><span class="pager-label">Next</span><span class="pager-title">TensorFlow and Keras</span></a></nav>
+        <p class="footnote">Personal study notes. Fan-made learning tool.</p>
+      </main>
+    </div>
+  </div>
+</div>
+<script src="/nav.js"></script>
+<script src="/shell.js"></script>
+<script src="/learn.js"></script>
+</body>
+</html>

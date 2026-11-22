@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<meta name="description" content="Neural networks, activations, backpropagation, loss functions, optimizers.">
+<title>Deep Learning | Pit Wall ML</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/learn.css">
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+</head>
+<body class="learn">
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+  <aside class="sidenav" id="sidenav"><div class="side-head"><a class="brand" href="/" aria-label="Pit Wall ML"><span class="logo" aria-hidden="true">PW</span><span class="brand-text">Pit Wall ML</span></a></div><label class="side-search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"/></svg><input type="search" placeholder="Search" aria-label="Search pages and articles" autocomplete="off"></label><div class="side-scroll"><nav class="nav-list" aria-label="Main"><a class="nav-link" href="/" data-tip="Dashboard"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="label">Dashboard</span></a><a class="nav-link" href="/learn" aria-current="page" data-tip="Learn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zm4 3h7m-7 4h7"/></svg><span class="label">Learn</span></a><a class="nav-link" href="/quiz" data-gated data-tip="Quiz"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.2c-.8.5-1.1 1-1.1 1.8M12 17.5v.01M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span class="label">Quiz</span></a><a class="nav-link" href="/math" data-gated data-tip="Math"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5v14M6 19l12-14"/></svg><span class="label">Math</span></a><a class="nav-link" href="/arena" data-gated data-tip="Arena"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 7 3 12l5 5m8-10 5 5-5 5M14 4l-4 16"/></svg><span class="label">Arena</span></a><a class="nav-link" href="/leaderboard" data-gated data-tip="Leaderboard"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 20V10h4v10zm5 0V4h4v16zm5 0v-7h4v7z"/></svg><span class="label">Leaderboard</span></a><a class="nav-link" href="/profile" data-gated data-tip="Profile"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-8 9a8 8 0 0 1 16 0z"/></svg><span class="label">Profile</span></a></nav><details class="nav-group" open><summary>Study notes</summary><ul class="nav-sub"><li><a href="/learn/01-machine-learning">Machine Learning</a></li><li><a href="/learn/02-deep-learning" aria-current="page">Deep Learning</a><ol class="toc"><li class="toc-l2"><a href="#21-what-is-deep-learning">2.1 What is Deep Learning?</a></li><li class="toc-l2"><a href="#22-neural-network">2.2 Neural Network</a></li><li class="toc-l2"><a href="#23-activation-functions">2.3 Activation Functions</a></li><li class="toc-l2"><a href="#24-forward-propagation-and-backpropagation">2.4 Forward Propagation and Backpropagation</a></li><li class="toc-l2"><a href="#25-loss-function">2.5 Loss Function</a></li><li class="toc-l2"><a href="#26-optimizer">2.6 Optimizer</a></li></ol></li><li><a href="/learn/03-nlp">Natural Language Processing</a></li><li><a href="/learn/04-pytorch">PyTorch</a></li><li><a href="/learn/05-tensorflow-keras">TensorFlow and Keras</a></li><li><a href="/learn/06-math-formulas">Math formulas</a></li><li><a href="/learn/07-math-priorities">Math priorities</a></li><li><a href="/learn/08-cheat-sheet">Formula cheat sheet</a></li><li><a href="/learn/09-tools-and-implementation">Tools and implementation</a></li><li><a href="/learn/10-mini-projects">Mini projects</a></li><li><a href="/learn/11-roadmap">Checklist and roadmap</a></li></ul></details></div></aside>
+  <div class="content">
+    <header class="pagehead" id="pagehead"><button class="menu-btn" type="button" data-nav-toggle aria-controls="sidenav" aria-expanded="false" aria-label="Open menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><a class="back" href="/learn" aria-label="Learn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></a><p class="pagehead-title">Deep Learning</p></header>
+    <div class="shell">
+      <main id="main" tabindex="-1">
+        <article lang="en">
+          <h1>Deep Learning</h1>
+          <p class="meta"><span>Estimate: 2-3 hours</span><span>&#8776; 3 min read</span></p>
+          <p class="prereq"><strong>Prerequisites:</strong> <a href="/learn/01-machine-learning">Machine Learning</a></p>
+          <div class="prose">
+<h2 id="21-what-is-deep-learning">2.1 What is Deep Learning?</h2>
+<p>Deep Learning is a part of Machine Learning that uses Artificial Neural
+Networks with many layers to learn complex patterns from data.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table, scroll to see all columns"><table>
+<thead>
+<tr>
+<th>Machine Learning</th>
+<th>Deep Learning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Often needs manual feature engineering</td>
+<td>Can learn features automatically</td>
+</tr>
+<tr>
+<td>Can work well with small to medium datasets</td>
+<td>Usually needs much more data</td>
+</tr>
+<tr>
+<td>Many traditional algorithms</td>
+<td>Neural networks with many layers</td>
+</tr>
+<tr>
+<td>Training is relatively light</td>
+<td>May need a GPU</td>
+</tr>
+</tbody>
+</table></div>
+<p>Example uses:</p>
+<ul>
+<li>Face recognition.</li>
+<li>Speech recognition.</li>
+<li>Image classification.</li>
+<li>Natural Language Processing.</li>
+<li>Generative AI and LLMs.</li>
+</ul>
+<h2 id="22-neural-network">2.2 Neural Network</h2>
+<p>A neural network is inspired by how biological neurons work.</p>
+<p>Basic structure:</p>
+<ol>
+<li><strong>Input Layer:</strong> receives the data.</li>
+<li><strong>Hidden Layers:</strong> learn the patterns.</li>
+<li><strong>Output Layer:</strong> produces the prediction.</li>
+</ol>
+<p>Each neuron performs the operations:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>z</mi><mo>=</mo><mi>W</mi><mi>x</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">z = Wx + b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.044em;">z</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.7667em;vertical-align:-0.0833em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">W</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span></span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>a</mi><mo>=</mo><mi>f</mi><mo stretchy="false">(</mo><mi>z</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">a = f(z)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.044em;">z</span><span class="mclose">)</span></span></span></span></span></p>
+<p>Where:</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">x</span></span></span></span>: input.</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi></mrow><annotation encoding="application/x-tex">W</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">W</span></span></span></span>: weights.</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6944em;"></span><span class="mord mathnormal">b</span></span></span></span>: bias.</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi></mrow><annotation encoding="application/x-tex">f</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8889em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span></span></span></span>: activation function.</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.4306em;"></span><span class="mord mathnormal">a</span></span></span></span>: neuron output.</li>
+</ul>
+<h2 id="23-activation-functions">2.3 Activation Functions</h2>
+<p>An activation function gives the neural network non-linear capability.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table, scroll to see all columns"><table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Formula</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ReLU</td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>max</mi><mo>⁡</mo><mo stretchy="false">(</mo><mn>0</mn><mo separator="true">,</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\max(0,x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">max</span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span></td>
+<td>Hidden layers</td>
+</tr>
+<tr>
+<td>Sigmoid</td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mn>1</mn><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mo>−</mo><mi>x</mi></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{1}{1+e^{-x}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1.2484em;vertical-align:-0.4033em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8451em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mbin mtight">+</span><span class="mord mtight"><span class="mord mathnormal mtight">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7027em;"><span style="top:-2.786em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="katex-sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight">−</span><span class="mord mathnormal mtight">x</span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4033em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></td>
+<td>Binary classification output</td>
+</tr>
+<tr>
+<td>Tanh</td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>tanh</mi><mo>⁡</mo><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\tanh(x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">tanh</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span></td>
+<td>Some hidden layers</td>
+</tr>
+<tr>
+<td>Softmax</td>
+<td><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><msup><mi>e</mi><msub><mi>z</mi><mi>i</mi></msub></msup><mrow><msub><mo>∑</mo><mi>j</mi></msub><msup><mi>e</mi><msub><mi>z</mi><mi>j</mi></msub></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{e^{z_i}}{\sum_j e^{z_j}}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1.5885em;vertical-align:-0.6775em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.911em;"><span style="top:-2.6447em;"><span class="pstrut" style="height:3em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mop mtight"><span class="mop op-symbol small-op mtight" style="position:relative;top:0em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1496em;"><span style="top:-2.1786em;margin-left:0em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="katex-sizing reset-size3 size1 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0572em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.4603em;"><span></span></span></span></span></span></span><span class="mspace mtight" style="margin-right:0.1952em;"></span><span class="mord mtight"><span class="mord mathnormal mtight">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.779em;"><span style="top:-2.9714em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="katex-sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.044em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3448em;margin-left:-0.044em;margin-right:0.1em;"><span class="pstrut" style="height:2.6595em;"></span><span class="mord mathnormal mtight" style="margin-right:0.0572em;">j</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.5092em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight">e</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.7385em;"><span style="top:-2.931em;margin-right:0.0714em;"><span class="pstrut" style="height:2.5em;"></span><span class="katex-sizing reset-size3 size1 mtight"><span class="mord mtight"><span class="mord mtight"><span class="mord mathnormal mtight" style="margin-right:0.044em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3448em;"><span style="top:-2.3448em;margin-left:-0.044em;margin-right:0.1em;"><span class="pstrut" style="height:2.6595em;"></span><span class="mord mathnormal mtight">i</span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.3147em;"><span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.6775em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></td>
+<td>Multiclass output</td>
+</tr>
+</tbody>
+</table></div>
+<p>Things to remember:</p>
+<ul>
+<li>ReLU is often the default choice for hidden layers.</li>
+<li>Sigmoid outputs values between 0 and 1.</li>
+<li>Softmax turns logits into a probability distribution that sums to 1.</li>
+</ul>
+<h2 id="24-forward-propagation-and-backpropagation">2.4 Forward Propagation and Backpropagation</h2>
+<p><strong>Forward Propagation:</strong> data moves from the input to the output to
+produce a prediction.</p>
+<p><strong>Backpropagation:</strong> the model computes how the error affects each
+weight and bias, using the chain rule from calculus. The optimizer then
+updates the model parameters to reduce the error.</p>
+<p>The training cycle:</p>
+<ol>
+<li>Forward pass: compute the prediction.</li>
+<li>Compute the loss.</li>
+<li>Backward pass: compute the gradients.</li>
+<li>Optimizer step: update the parameters.</li>
+</ol>
+<h2 id="25-loss-function">2.5 Loss Function</h2>
+<p>A loss function measures how far the model's prediction is from the
+true value.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table, scroll to see all columns"><table>
+<thead>
+<tr>
+<th>Loss</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MSE</td>
+<td>Regression</td>
+</tr>
+<tr>
+<td>MAE</td>
+<td>Regression</td>
+</tr>
+<tr>
+<td>Binary Cross Entropy</td>
+<td>Binary classification</td>
+</tr>
+<tr>
+<td>Categorical Cross Entropy</td>
+<td>Multiclass classification</td>
+</tr>
+<tr>
+<td>Huber Loss</td>
+<td>Regression that is more robust to outliers</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="26-optimizer">2.6 Optimizer</h2>
+<p>An optimizer determines how the model parameters are updated.</p>
+<p>The most important ones:</p>
+<ul>
+<li>SGD (Stochastic Gradient Descent)</li>
+<li>Momentum</li>
+<li>RMSprop</li>
+<li>Adam</li>
+<li>AdamW</li>
+</ul>
+<p>Adam and AdamW are often used as the first optimizer for deep learning.
+The choice of optimizer should still be tested against the model and
+the dataset.</p>
+
+          </div>
+        </article>
+        <nav class="pager" aria-label="Previous / Next"><a class="pager-link prev" href="/learn/01-machine-learning"><span class="pager-label">Previous</span><span class="pager-title">Machine Learning</span></a><a class="pager-link next" href="/learn/03-nlp"><span class="pager-label">Next</span><span class="pager-title">Natural Language Processing</span></a></nav>
+        <p class="footnote">Personal study notes. Fan-made learning tool.</p>
+      </main>
+    </div>
+  </div>
+</div>
+<script src="/nav.js"></script>
+<script src="/shell.js"></script>
+<script src="/learn.js"></script>
+</body>
+</html>

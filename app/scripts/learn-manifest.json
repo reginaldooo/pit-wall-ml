@@ -1,0 +1,179 @@
+{
+  "siteTitle": "Pit Wall ML",
+  "groups": [
+    {
+      "id": "g1",
+      "title": "Foundations",
+      "summary": "Machine learning basics, deep learning, and how language models work."
+    },
+    {
+      "id": "g2",
+      "title": "Frameworks",
+      "summary": "PyTorch and TensorFlow/Keras from tensors to training loops."
+    },
+    {
+      "id": "g3",
+      "title": "Math you need",
+      "summary": "Formulas, what to prioritise, and a cheat sheet."
+    },
+    {
+      "id": "g4",
+      "title": "Build and practise",
+      "summary": "Tools, implementation skills, mini projects, and a study roadmap."
+    }
+  ],
+  "articles": [
+    {
+      "id": "01-machine-learning",
+      "group": "g1",
+      "source": "study:notes/machine_learning_deep_learning_nlp_notes.md",
+      "sections": [
+        "## 1. Machine Learning"
+      ],
+      "title": "Machine Learning",
+      "summary": "Supervised, unsupervised, reinforcement learning, train/validation/test, overfitting.",
+      "estimate": "2-3 hours",
+      "prerequisites": []
+    },
+    {
+      "id": "02-deep-learning",
+      "group": "g1",
+      "source": "study:notes/machine_learning_deep_learning_nlp_notes.md",
+      "sections": [
+        "## 2. Deep Learning"
+      ],
+      "title": "Deep Learning",
+      "summary": "Neural networks, activations, backpropagation, loss functions, optimizers.",
+      "estimate": "2-3 hours",
+      "prerequisites": [
+        "01-machine-learning"
+      ]
+    },
+    {
+      "id": "03-nlp",
+      "group": "g1",
+      "source": "study:notes/machine_learning_deep_learning_nlp_notes.md",
+      "sections": [
+        "## 3. Natural Language Processing"
+      ],
+      "title": "Natural Language Processing",
+      "summary": "Pipeline, preprocessing, embeddings, RNN/LSTM/Transformer, attention, BERT vs GPT.",
+      "estimate": "3-4 hours",
+      "prerequisites": [
+        "02-deep-learning"
+      ]
+    },
+    {
+      "id": "04-pytorch",
+      "group": "g2",
+      "source": "study:notes/machine_learning_deep_learning_nlp_notes.md",
+      "sections": [
+        "## 4. PyTorch"
+      ],
+      "title": "PyTorch",
+      "summary": "Tensors, nn.Module, the training loop.",
+      "estimate": "2-3 hours",
+      "prerequisites": [
+        "02-deep-learning"
+      ]
+    },
+    {
+      "id": "05-tensorflow-keras",
+      "group": "g2",
+      "source": "study:notes/machine_learning_deep_learning_nlp_notes.md",
+      "sections": [
+        "## 5. TensorFlow and Keras"
+      ],
+      "title": "TensorFlow and Keras",
+      "summary": "Keras models, evaluation, PyTorch vs TensorFlow.",
+      "estimate": "2 hours",
+      "prerequisites": [
+        "04-pytorch"
+      ]
+    },
+    {
+      "id": "06-math-formulas",
+      "group": "g3",
+      "source": "study:notes/machine_learning_deep_learning_nlp_notes.md",
+      "sections": [
+        "## 6. Mathematical Formulas"
+      ],
+      "title": "Math formulas",
+      "summary": "Linear algebra, calculus, probability, optimization, ML and evaluation formulas.",
+      "estimate": "4-6 hours",
+      "prerequisites": [
+        "01-machine-learning"
+      ]
+    },
+    {
+      "id": "07-math-priorities",
+      "group": "g3",
+      "source": "study:notes/machine_learning_deep_learning_nlp_notes.md",
+      "sections": [
+        "## 7. Mathematics You Must Master"
+      ],
+      "title": "Math priorities",
+      "summary": "What to study first and why.",
+      "estimate": "1 hour",
+      "prerequisites": [
+        "06-math-formulas"
+      ]
+    },
+    {
+      "id": "08-cheat-sheet",
+      "group": "g3",
+      "source": "study:notes/machine_learning_deep_learning_nlp_notes.md",
+      "sections": [
+        "## 11. Cheat Sheet"
+      ],
+      "title": "Formula cheat sheet",
+      "summary": "The formulas to memorise.",
+      "estimate": "30 min",
+      "prerequisites": [
+        "06-math-formulas"
+      ]
+    },
+    {
+      "id": "09-tools-and-implementation",
+      "group": "g4",
+      "source": "study:notes/machine_learning_deep_learning_nlp_notes.md",
+      "sections": [
+        "## 8. Libraries and Tools",
+        "## 9. Implementation"
+      ],
+      "title": "Tools and implementation",
+      "summary": "Libraries to know and what you must be able to implement.",
+      "estimate": "1-2 hours",
+      "prerequisites": [
+        "04-pytorch"
+      ]
+    },
+    {
+      "id": "10-mini-projects",
+      "group": "g4",
+      "source": "study:notes/machine_learning_deep_learning_nlp_notes.md",
+      "sections": [
+        "## 10. Mini Project"
+      ],
+      "title": "Mini projects",
+      "summary": "Credit risk, fraud detection, and financial sentiment projects.",
+      "estimate": "1 hour",
+      "prerequisites": [
+        "09-tools-and-implementation"
+      ]
+    },
+    {
+      "id": "11-roadmap",
+      "group": "g4",
+      "source": "study:notes/machine_learning_deep_learning_nlp_notes.md",
+      "sections": [
+        "## 12. Study Checklist",
+        "## 13. Recommended Learning Order"
+      ],
+      "title": "Checklist and roadmap",
+      "summary": "Study checklist, recommended order, principles for an applied AI engineer.",
+      "estimate": "30 min",
+      "prerequisites": []
+    }
+  ]
+}

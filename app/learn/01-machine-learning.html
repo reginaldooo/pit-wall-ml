@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<meta name="description" content="Supervised, unsupervised, reinforcement learning, train/validation/test, overfitting.">
+<title>Machine Learning | Pit Wall ML</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/learn.css">
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+</head>
+<body class="learn">
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+  <aside class="sidenav" id="sidenav"><div class="side-head"><a class="brand" href="/" aria-label="Pit Wall ML"><span class="logo" aria-hidden="true">PW</span><span class="brand-text">Pit Wall ML</span></a></div><label class="side-search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"/></svg><input type="search" placeholder="Search" aria-label="Search pages and articles" autocomplete="off"></label><div class="side-scroll"><nav class="nav-list" aria-label="Main"><a class="nav-link" href="/" data-tip="Dashboard"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="label">Dashboard</span></a><a class="nav-link" href="/learn" aria-current="page" data-tip="Learn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zm4 3h7m-7 4h7"/></svg><span class="label">Learn</span></a><a class="nav-link" href="/quiz" data-gated data-tip="Quiz"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.2c-.8.5-1.1 1-1.1 1.8M12 17.5v.01M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span class="label">Quiz</span></a><a class="nav-link" href="/math" data-gated data-tip="Math"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5v14M6 19l12-14"/></svg><span class="label">Math</span></a><a class="nav-link" href="/arena" data-gated data-tip="Arena"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 7 3 12l5 5m8-10 5 5-5 5M14 4l-4 16"/></svg><span class="label">Arena</span></a><a class="nav-link" href="/leaderboard" data-gated data-tip="Leaderboard"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 20V10h4v10zm5 0V4h4v16zm5 0v-7h4v7z"/></svg><span class="label">Leaderboard</span></a><a class="nav-link" href="/profile" data-gated data-tip="Profile"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-8 9a8 8 0 0 1 16 0z"/></svg><span class="label">Profile</span></a></nav><details class="nav-group" open><summary>Study notes</summary><ul class="nav-sub"><li><a href="/learn/01-machine-learning" aria-current="page">Machine Learning</a><ol class="toc"><li class="toc-l2"><a href="#11-what-is-machine-learning">1.1 What is Machine Learning?</a></li><li class="toc-l2"><a href="#12-how-machine-learning-works">1.2 How Machine Learning works</a></li><li class="toc-l2"><a href="#13-types-of-machine-learning">1.3 Types of Machine Learning</a></li><li class="toc-l3"><a href="#a-supervised-learning">A. Supervised Learning</a></li><li class="toc-l3"><a href="#b-unsupervised-learning">B. Unsupervised Learning</a></li><li class="toc-l3"><a href="#c-reinforcement-learning">C. Reinforcement Learning</a></li><li class="toc-l2"><a href="#14-key-concepts-in-machine-learning">1.4 Key concepts in Machine Learning</a></li><li class="toc-l3"><a href="#training-validation-and-testing">Training, Validation, and Testing</a></li><li class="toc-l3"><a href="#overfitting">Overfitting</a></li><li class="toc-l3"><a href="#underfitting">Underfitting</a></li></ol></li><li><a href="/learn/02-deep-learning">Deep Learning</a></li><li><a href="/learn/03-nlp">Natural Language Processing</a></li><li><a href="/learn/04-pytorch">PyTorch</a></li><li><a href="/learn/05-tensorflow-keras">TensorFlow and Keras</a></li><li><a href="/learn/06-math-formulas">Math formulas</a></li><li><a href="/learn/07-math-priorities">Math priorities</a></li><li><a href="/learn/08-cheat-sheet">Formula cheat sheet</a></li><li><a href="/learn/09-tools-and-implementation">Tools and implementation</a></li><li><a href="/learn/10-mini-projects">Mini projects</a></li><li><a href="/learn/11-roadmap">Checklist and roadmap</a></li></ul></details></div></aside>
+  <div class="content">
+    <header class="pagehead" id="pagehead"><button class="menu-btn" type="button" data-nav-toggle aria-controls="sidenav" aria-expanded="false" aria-label="Open menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><a class="back" href="/learn" aria-label="Learn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></a><p class="pagehead-title">Machine Learning</p></header>
+    <div class="shell">
+      <main id="main" tabindex="-1">
+        <article lang="en">
+          <h1>Machine Learning</h1>
+          <p class="meta"><span>Estimate: 2-3 hours</span><span>&#8776; 3 min read</span></p>
+          
+          <div class="prose">
+<h2 id="11-what-is-machine-learning">1.1 What is Machine Learning?</h2>
+<p>Machine Learning is a branch of Artificial Intelligence that lets
+computers learn patterns from data to make predictions or decisions
+without being explicitly programmed for every possibility.</p>
+<p>Examples:</p>
+<ul>
+<li>A bank predicts whether someone is likely to default on a loan.</li>
+<li>A fintech detects suspicious transactions.</li>
+<li>An e-commerce site predicts which products a customer may buy.</li>
+<li>A company predicts customer churn.</li>
+</ul>
+<h2 id="12-how-machine-learning-works">1.2 How Machine Learning works</h2>
+<ol>
+<li><strong>Data Collection:</strong> gather the dataset.</li>
+<li><strong>Data Preprocessing:</strong> cleaning, encoding, normalization.</li>
+<li><strong>Model Training:</strong> the model learns from the data.</li>
+<li><strong>Model Evaluation:</strong> measure the model's performance.</li>
+<li><strong>Prediction / Deployment:</strong> the model is used on new data.</li>
+</ol>
+<h2 id="13-types-of-machine-learning">1.3 Types of Machine Learning</h2>
+<h3 id="a-supervised-learning">A. Supervised Learning</h3>
+<p>The model learns from data that has labels (targets).</p>
+<p>Examples:</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table, scroll to see all columns"><table>
+<thead>
+<tr>
+<th>Input</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Age, income, occupation</td>
+<td>Loan approved / rejected</td>
+</tr>
+<tr>
+<td>Transaction, amount, time</td>
+<td>Fraud / legitimate</td>
+</tr>
+<tr>
+<td>Customer history</td>
+<td>Churn / not churn</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two main types:</p>
+<ul>
+<li><strong>Regression:</strong> predicts a numeric value.</li>
+<li><strong>Classification:</strong> predicts a class or category.</li>
+</ul>
+<p>Algorithms to know:</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table, scroll to see all columns"><table>
+<thead>
+<tr>
+<th>Algorithm</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Linear Regression</td>
+<td>Predicting continuous values</td>
+</tr>
+<tr>
+<td>Logistic Regression</td>
+<td>Binary classification</td>
+</tr>
+<tr>
+<td>Decision Tree</td>
+<td>Rule-based decision making</td>
+</tr>
+<tr>
+<td>Random Forest</td>
+<td>Ensemble of several decision trees</td>
+</tr>
+<tr>
+<td>XGBoost</td>
+<td>Gradient boosting</td>
+</tr>
+<tr>
+<td>SVM</td>
+<td>Classification with a margin</td>
+</tr>
+<tr>
+<td>KNN</td>
+<td>Prediction based on the nearest neighbours</td>
+</tr>
+<tr>
+<td>Naive Bayes</td>
+<td>Probabilistic classification</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="b-unsupervised-learning">B. Unsupervised Learning</h3>
+<p>The model learns from data without labels.</p>
+<p>Examples:</p>
+<ul>
+<li>Segmenting fintech customers.</li>
+<li>Grouping users by behaviour.</li>
+<li>Finding unusual transaction patterns.</li>
+</ul>
+<p>Algorithms:</p>
+<ul>
+<li>K-Means Clustering</li>
+<li>DBSCAN</li>
+<li>Hierarchical Clustering</li>
+<li>PCA (Principal Component Analysis)</li>
+</ul>
+<h3 id="c-reinforcement-learning">C. Reinforcement Learning</h3>
+<p>The model learns by interacting with an environment, based on rewards
+and punishments.</p>
+<p>Examples:</p>
+<ul>
+<li>Robot navigation.</li>
+<li>Game AI.</li>
+<li>Optimizing decision-making strategies.</li>
+</ul>
+<p>Key concepts:</p>
+<ul>
+<li>Agent</li>
+<li>Environment</li>
+<li>State</li>
+<li>Action</li>
+<li>Reward</li>
+<li>Policy</li>
+</ul>
+<h2 id="14-key-concepts-in-machine-learning">1.4 Key concepts in Machine Learning</h2>
+<h3 id="training-validation-and-testing">Training, Validation, and Testing</h3>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table, scroll to see all columns"><table>
+<thead>
+<tr>
+<th>Dataset</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Training</td>
+<td>Teaches the model</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td>Chooses hyperparameters and models</td>
+</tr>
+<tr>
+<td>Testing</td>
+<td>Measures performance on data not used before</td>
+</tr>
+</tbody>
+</table></div>
+<p>Example split:</p>
+<ul>
+<li>70% training</li>
+<li>15% validation</li>
+<li>15% testing</li>
+</ul>
+<p>This split is not an absolute rule; adjust it to the dataset size, the
+characteristics of the data, and the evaluation needs. For time-series
+data, split by time instead of using an ordinary random split.</p>
+<h3 id="overfitting">Overfitting</h3>
+<p>The model memorises the training data, so it performs poorly on new
+data.</p>
+<p>Signs:</p>
+<ul>
+<li>High training accuracy.</li>
+<li>Low validation accuracy.</li>
+</ul>
+<p>Solutions:</p>
+<ul>
+<li>Regularization.</li>
+<li>Cross-validation.</li>
+<li>Feature selection.</li>
+<li>Reduce model complexity.</li>
+<li>Add more data.</li>
+<li>Dropout for neural networks.</li>
+</ul>
+<h3 id="underfitting">Underfitting</h3>
+<p>The model is too simple to learn the patterns in the data.</p>
+<p>Solutions:</p>
+<ul>
+<li>Use a more complex model.</li>
+<li>Add relevant features.</li>
+<li>Reduce excessive regularization.</li>
+<li>Train more effectively.</li>
+</ul>
+
+          </div>
+        </article>
+        <nav class="pager" aria-label="Previous / Next"><span></span><a class="pager-link next" href="/learn/02-deep-learning"><span class="pager-label">Next</span><span class="pager-title">Deep Learning</span></a></nav>
+        <p class="footnote">Personal study notes. Fan-made learning tool.</p>
+      </main>
+    </div>
+  </div>
+</div>
+<script src="/nav.js"></script>
+<script src="/shell.js"></script>
+<script src="/learn.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+tests
+README.md
+.vercel
+supabase
+scripts
+docs
+node_modules
+.env*

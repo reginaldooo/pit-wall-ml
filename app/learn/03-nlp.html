@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<meta name="description" content="Pipeline, preprocessing, embeddings, RNN/LSTM/Transformer, attention, BERT vs GPT.">
+<title>Natural Language Processing | Pit Wall ML</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/learn.css">
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+</head>
+<body class="learn">
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+  <aside class="sidenav" id="sidenav"><div class="side-head"><a class="brand" href="/" aria-label="Pit Wall ML"><span class="logo" aria-hidden="true">PW</span><span class="brand-text">Pit Wall ML</span></a></div><label class="side-search"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m21 21-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z"/></svg><input type="search" placeholder="Search" aria-label="Search pages and articles" autocomplete="off"></label><div class="side-scroll"><nav class="nav-list" aria-label="Main"><a class="nav-link" href="/" data-tip="Dashboard"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 11.5 12 4l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span class="label">Dashboard</span></a><a class="nav-link" href="/learn" aria-current="page" data-tip="Learn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zm4 3h7m-7 4h7"/></svg><span class="label">Learn</span></a><a class="nav-link" href="/quiz" data-gated data-tip="Quiz"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9.5 9a2.5 2.5 0 1 1 3.6 2.2c-.8.5-1.1 1-1.1 1.8M12 17.5v.01M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg><span class="label">Quiz</span></a><a class="nav-link" href="/math" data-gated data-tip="Math"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M12 5v14M6 19l12-14"/></svg><span class="label">Math</span></a><a class="nav-link" href="/arena" data-gated data-tip="Arena"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 7 3 12l5 5m8-10 5 5-5 5M14 4l-4 16"/></svg><span class="label">Arena</span></a><a class="nav-link" href="/leaderboard" data-gated data-tip="Leaderboard"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 20V10h4v10zm5 0V4h4v16zm5 0v-7h4v7z"/></svg><span class="label">Leaderboard</span></a><a class="nav-link" href="/profile" data-gated data-tip="Profile"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zm-8 9a8 8 0 0 1 16 0z"/></svg><span class="label">Profile</span></a></nav><details class="nav-group" open><summary>Study notes</summary><ul class="nav-sub"><li><a href="/learn/01-machine-learning">Machine Learning</a></li><li><a href="/learn/02-deep-learning">Deep Learning</a></li><li><a href="/learn/03-nlp" aria-current="page">Natural Language Processing</a><ol class="toc"><li class="toc-l2"><a href="#31-what-is-nlp">3.1 What is NLP?</a></li><li class="toc-l2"><a href="#32-nlp-pipeline">3.2 NLP Pipeline</a></li><li class="toc-l2"><a href="#33-nlp-techniques-to-understand">3.3 NLP techniques to understand</a></li><li class="toc-l3"><a href="#a-text-preprocessing">A. Text Preprocessing</a></li><li class="toc-l3"><a href="#b-text-representation">B. Text Representation</a></li><li class="toc-l2"><a href="#34-word-embedding">3.4 Word Embedding</a></li><li class="toc-l2"><a href="#35-rnn-lstm-gru-and-transformer">3.5 RNN, LSTM, GRU, and Transformer</a></li><li class="toc-l3"><a href="#rnn-recurrent-neural-network">RNN (Recurrent Neural Network)</a></li><li class="toc-l3"><a href="#lstm">LSTM</a></li><li class="toc-l3"><a href="#gru">GRU</a></li><li class="toc-l3"><a href="#transformer">Transformer</a></li><li class="toc-l2"><a href="#36-attention-mechanism">3.6 Attention Mechanism</a></li><li class="toc-l2"><a href="#37-bert-vs-gpt">3.7 BERT vs GPT</a></li></ol></li><li><a href="/learn/04-pytorch">PyTorch</a></li><li><a href="/learn/05-tensorflow-keras">TensorFlow and Keras</a></li><li><a href="/learn/06-math-formulas">Math formulas</a></li><li><a href="/learn/07-math-priorities">Math priorities</a></li><li><a href="/learn/08-cheat-sheet">Formula cheat sheet</a></li><li><a href="/learn/09-tools-and-implementation">Tools and implementation</a></li><li><a href="/learn/10-mini-projects">Mini projects</a></li><li><a href="/learn/11-roadmap">Checklist and roadmap</a></li></ul></details></div></aside>
+  <div class="content">
+    <header class="pagehead" id="pagehead"><button class="menu-btn" type="button" data-nav-toggle aria-controls="sidenav" aria-expanded="false" aria-label="Open menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button><a class="back" href="/learn" aria-label="Learn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></a><p class="pagehead-title">Natural Language Processing</p></header>
+    <div class="shell">
+      <main id="main" tabindex="-1">
+        <article lang="en">
+          <h1>Natural Language Processing</h1>
+          <p class="meta"><span>Estimate: 3-4 hours</span><span>&#8776; 4 min read</span></p>
+          <p class="prereq"><strong>Prerequisites:</strong> <a href="/learn/02-deep-learning">Deep Learning</a></p>
+          <div class="prose">
+<h2 id="31-what-is-nlp">3.1 What is NLP?</h2>
+<p>Natural Language Processing is the field of AI that lets computers
+understand, process, analyse, and generate human language.</p>
+<p>Example applications:</p>
+<ul>
+<li>Customer service chatbots.</li>
+<li>Sentiment analysis.</li>
+<li>Spam detection.</li>
+<li>Text classification.</li>
+<li>Document summarization.</li>
+<li>Machine translation.</li>
+<li>Information extraction.</li>
+<li>Large Language Models.</li>
+</ul>
+<h2 id="32-nlp-pipeline">3.2 NLP Pipeline</h2>
+<ol>
+<li><strong>Raw Text:</strong> the unprocessed text.</li>
+<li><strong>Text Cleaning:</strong> remove noise and normalise the text.</li>
+<li><strong>Tokenization:</strong> split the text into tokens.</li>
+<li><strong>Numerical Representation:</strong> turn tokens into numbers or vectors.</li>
+<li><strong>Model Processing:</strong> the model learns language patterns.</li>
+<li><strong>Prediction:</strong> produce a prediction, for example positive sentiment.</li>
+</ol>
+<h2 id="33-nlp-techniques-to-understand">3.3 NLP techniques to understand</h2>
+<h3 id="a-text-preprocessing">A. Text Preprocessing</h3>
+<ol>
+<li><strong>Lowercasing:</strong> convert the text to lowercase.</li>
+<li><strong>Tokenization:</strong> split a sentence into tokens.</li>
+<li><strong>Stopword removal:</strong> remove common words when relevant.</li>
+<li><strong>Stemming:</strong> reduce a word to its base form using rules.</li>
+<li><strong>Lemmatization:</strong> reduce a word to its lemma.</li>
+<li><strong>Padding:</strong> make sequences the same length.</li>
+<li><strong>Truncation:</strong> limit the sequence length.</li>
+</ol>
+<p>Example:</p>
+<p>Input: <code>The customers are buying products</code></p>
+<p>Tokenization: <code>[&quot;The&quot;, &quot;customers&quot;, &quot;are&quot;, &quot;buying&quot;, &quot;products&quot;]</code></p>
+<p>Note: preprocessing does not always have to remove stopwords or apply
+stemming. For modern Transformer models, too much preprocessing can
+remove useful information. Follow the needs of the model and the
+characteristics of the language.</p>
+<h3 id="b-text-representation">B. Text Representation</h3>
+<p>Computers do not understand words directly. Text must be represented as
+numbers.</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table, scroll to see all columns"><table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bag of Words</td>
+<td>Counts word occurrences</td>
+</tr>
+<tr>
+<td>TF-IDF</td>
+<td>Measures how important a word is</td>
+</tr>
+<tr>
+<td>Word2Vec</td>
+<td>Learns word representations</td>
+</tr>
+<tr>
+<td>GloVe</td>
+<td>Statistics-based word embeddings</td>
+</tr>
+<tr>
+<td>FastText</td>
+<td>Embeddings with subwords</td>
+</tr>
+<tr>
+<td>BERT Embedding</td>
+<td>Contextual word representation</td>
+</tr>
+</tbody>
+</table></div>
+<p>TF-IDF example:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>T</mi><mi>F</mi><mi>I</mi><mi>D</mi><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo separator="true">,</mo><mi>d</mi><mo stretchy="false">)</mo><mo>=</mo><mi>T</mi><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo separator="true">,</mo><mi>d</mi><mo stretchy="false">)</mo><mo>×</mo><mi>I</mi><mi>D</mi><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">TFIDF(t,d)=TF(t,d)\times IDF(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="mord mathnormal" style="margin-right:0.1389em;">F</span><span class="mord mathnormal" style="margin-right:0.0785em;">I</span><span class="mord mathnormal" style="margin-right:0.0278em;">D</span><span class="mord mathnormal" style="margin-right:0.1389em;">F</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">d</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.1389em;">T</span><span class="mord mathnormal" style="margin-right:0.1389em;">F</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal">d</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">I</span><span class="mord mathnormal" style="margin-right:0.0278em;">D</span><span class="mord mathnormal" style="margin-right:0.1389em;">F</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span></span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>I</mi><mi>D</mi><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo><mo>=</mo><mi>log</mi><mo>⁡</mo><mfrac><mi>N</mi><mrow><mi>D</mi><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">IDF(t)=\log\frac{N}{DF(t)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0785em;">I</span><span class="mord mathnormal" style="margin-right:0.0278em;">D</span><span class="mord mathnormal" style="margin-right:0.1389em;">F</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:2.2963em;vertical-align:-0.936em;"></span><span class="mop">lo<span style="margin-right:0.0139em;">g</span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0278em;">D</span><span class="mord mathnormal" style="margin-right:0.1389em;">F</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal" style="margin-right:0.109em;">N</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>Where:</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>N</mi></mrow><annotation encoding="application/x-tex">N</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.109em;">N</span></span></span></span>: the total number of documents.</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mi>F</mi><mo stretchy="false">(</mo><mi>t</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">DF(t)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">D</span><span class="mord mathnormal" style="margin-right:0.1389em;">F</span><span class="mopen">(</span><span class="mord mathnormal">t</span><span class="mclose">)</span></span></span></span>: the number of documents that contain the term.</li>
+</ul>
+<p>The intuition: a word that appears often in one document but rarely
+across all documents has a high TF-IDF value.</p>
+<h2 id="34-word-embedding">3.4 Word Embedding</h2>
+<p>A word embedding turns a word into a numeric vector with a certain
+number of dimensions.</p>
+<p>Illustrative example:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>K</mi><mi>i</mi><mi>n</mi><mi>g</mi><mo>=</mo><mo stretchy="false">[</mo><mn>0.2</mn><mo separator="true">,</mo><mn>0.8</mn><mo separator="true">,</mo><mn>0.4</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">King=[0.2,0.8,0.4]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">K</span><span class="mord mathnormal">in</span><span class="mord mathnormal" style="margin-right:0.0359em;">g</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0.2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.8</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.4</span><span class="mclose">]</span></span></span></span></span></p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>Q</mi><mi>u</mi><mi>e</mi><mi>e</mi><mi>n</mi><mo>=</mo><mo stretchy="false">[</mo><mn>0.3</mn><mo separator="true">,</mo><mn>0.9</mn><mo separator="true">,</mo><mn>0.5</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">Queen=[0.3,0.9,0.5]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8778em;vertical-align:-0.1944em;"></span><span class="mord mathnormal">Q</span><span class="mord mathnormal">u</span><span class="mord mathnormal">ee</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0.3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.9</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord">0.5</span><span class="mclose">]</span></span></span></span></span></p>
+<p>Words with similar context or meaning tend to have vector
+representations that are close together.</p>
+<p>What to understand:</p>
+<ul>
+<li>Vector representation.</li>
+<li>Vector similarity.</li>
+<li>Cosine similarity.</li>
+<li>Word2Vec.</li>
+<li>Contextual embedding.</li>
+</ul>
+<p>Cosine similarity:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>cosine</mtext><mo stretchy="false">(</mo><mi>A</mi><mo separator="true">,</mo><mi>B</mi><mo stretchy="false">)</mo><mo>=</mo><mfrac><mrow><mi>A</mi><mo>⋅</mo><mi>B</mi></mrow><mrow><mi mathvariant="normal">∥</mi><mi>A</mi><mi mathvariant="normal">∥</mi><mi mathvariant="normal">∥</mi><mi>B</mi><mi mathvariant="normal">∥</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\text{cosine}(A,B)=\frac{A\cdot B}{\|A\|\|B\|}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord text"><span class="mord">cosine</span></span><span class="mopen">(</span><span class="mord mathnormal">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:2.2963em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3603em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∥</span><span class="mord mathnormal">A</span><span class="mord">∥∥</span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span><span class="mord">∥</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">A</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">⋅</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.0502em;">B</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>Its value ranges from -1 to 1.</p>
+<h2 id="35-rnn-lstm-gru-and-transformer">3.5 RNN, LSTM, GRU, and Transformer</h2>
+<p>These are Deep Learning architectures for processing sequences.</p>
+<h3 id="rnn-recurrent-neural-network">RNN (Recurrent Neural Network)</h3>
+<p>Processes a sequence while keeping the hidden state from the previous
+step.</p>
+<p>Weakness: it struggles to learn long-term dependencies because of
+vanishing/exploding gradients.</p>
+<h3 id="lstm">LSTM</h3>
+<p>Uses gates to control which information is kept and which is forgotten.</p>
+<p>Suitable for sequence data and certain time-series.</p>
+<h3 id="gru">GRU</h3>
+<p>A simpler version of the LSTM with an update gate and a reset gate.</p>
+<h3 id="transformer">Transformer</h3>
+<p>Uses the attention mechanism to learn relationships between tokens
+without sequential recurrent processing.</p>
+<p>It is the foundation of BERT, GPT, and many modern LLMs.</p>
+<h2 id="36-attention-mechanism">3.6 Attention Mechanism</h2>
+<p>Attention lets the model decide which parts of the input are most
+relevant when processing a given token.</p>
+<p>The Scaled Dot-Product Attention formula:</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>A</mi><mi>t</mi><mi>t</mi><mi>e</mi><mi>n</mi><mi>t</mi><mi>i</mi><mi>o</mi><mi>n</mi><mo stretchy="false">(</mo><mi>Q</mi><mo separator="true">,</mo><mi>K</mi><mo separator="true">,</mo><mi>V</mi><mo stretchy="false">)</mo><mo>=</mo><mi>S</mi><mi>o</mi><mi>f</mi><mi>t</mi><mi>m</mi><mi>a</mi><mi>x</mi><mrow><mo fence="true">(</mo><mfrac><mrow><mi>Q</mi><msup><mi>K</mi><mi>T</mi></msup></mrow><msqrt><msub><mi>d</mi><mi>k</mi></msub></msqrt></mfrac><mo fence="true">)</mo></mrow><mi>V</mi></mrow><annotation encoding="application/x-tex">Attention(Q,K,V)=Softmax\left(\frac{QK^T}{\sqrt{d_k}}\right)V</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal">A</span><span class="mord mathnormal">tt</span><span class="mord mathnormal">e</span><span class="mord mathnormal">n</span><span class="mord mathnormal">t</span><span class="mord mathnormal">i</span><span class="mord mathnormal">o</span><span class="mord mathnormal">n</span><span class="mopen">(</span><span class="mord mathnormal">Q</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.0715em;">K</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.2222em;">V</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="katex-base"><span class="katex-strut" style="height:2.4684em;vertical-align:-0.95em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">S</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.1076em;">f</span><span class="mord mathnormal">t</span><span class="mord mathnormal">ma</span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">(</span></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.5183em;"><span style="top:-2.2528em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord sqrt"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8572em;"><span class="svg-align" style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord" style="padding-left:0.833em;"><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0315em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span><span style="top:-2.8172em;"><span class="pstrut" style="height:3em;"></span><span class="hide-tail" style="min-width:0.853em;height:1.08em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="1.08em" viewBox="0 0 400000 1080" preserveAspectRatio="xMinYMin slice"><path d="M95,702
+c-2.7,0,-7.17,-2.7,-13.5,-8c-5.8,-5.3,-9.5,-10,-9.5,-14
+c0,-2,0.3,-3.3,1,-4c1.3,-2.7,23.83,-20.7,67.5,-54
+c44.2,-33.3,65.8,-50.3,66.5,-51c1.3,-1.3,3,-2,5,-2c4.7,0,8.7,3.3,12,10
+s173,378,173,378c0.7,0,35.3,-71,104,-213c68.7,-142,137.5,-285,206.5,-429
+c69,-144,104.5,-217.7,106.5,-221
+l0 -0
+c5.3,-9.3,12,-14,20,-14
+H400000v40H845.2724
+s-225.272,467,-225.272,467s-235,486,-235,486c-2.7,4.7,-9,7,-19,7
+c-6,0,-10,-1,-12,-3s-194,-422,-194,-422s-65,47,-65,47z
+M834 80h400000v40h-400000z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.1828em;"><span></span></span></span></span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">Q</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.0715em;">K</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.1389em;">T</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.93em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">)</span></span></span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord mathnormal" style="margin-right:0.2222em;">V</span></span></span></span></span></p>
+<p>Where:</p>
+<ul>
+<li><strong>Q = Query:</strong> the information being looked for.</li>
+<li><strong>K = Key:</strong> the information available to be matched.</li>
+<li><strong>V = Value:</strong> the information that will be retrieved.</li>
+<li><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>d</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">d_k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="katex-base"><span class="katex-strut" style="height:0.8444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathnormal">d</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3361em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="katex-sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight" style="margin-right:0.0315em;">k</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>: the dimension of the Key.</li>
+</ul>
+<h2 id="37-bert-vs-gpt">3.7 BERT vs GPT</h2>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Table, scroll to see all columns"><table>
+<thead>
+<tr>
+<th>BERT</th>
+<th>GPT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Encoder-based</td>
+<td>Decoder-based</td>
+</tr>
+<tr>
+<td>Bidirectional context</td>
+<td>Autoregressive context</td>
+</tr>
+<tr>
+<td>Strong at representation and text understanding</td>
+<td>Strong at text generation</td>
+</tr>
+<tr>
+<td>Masked Language Modeling</td>
+<td>Next-token prediction</td>
+</tr>
+</tbody>
+</table></div>
+<p>Example applications:</p>
+<ul>
+<li><strong>BERT:</strong> sentiment classification, semantic understanding.</li>
+<li><strong>GPT:</strong> chatbots, content generation, and many generative tasks.</li>
+</ul>
+
+          </div>
+        </article>
+        <nav class="pager" aria-label="Previous / Next"><a class="pager-link prev" href="/learn/02-deep-learning"><span class="pager-label">Previous</span><span class="pager-title">Deep Learning</span></a><a class="pager-link next" href="/learn/04-pytorch"><span class="pager-label">Next</span><span class="pager-title">PyTorch</span></a></nav>
+        <p class="footnote">Personal study notes. Fan-made learning tool.</p>
+      </main>
+    </div>
+  </div>
+</div>
+<script src="/nav.js"></script>
+<script src="/shell.js"></script>
+<script src="/learn.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="noindex">
+<meta name="description" content="Numeric and concept drills on the mathematics behind machine learning.">
+<title>Math drills | Pit Wall ML</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="/site.css">
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+</head>
+<body data-track="math">
+<a class="skip" href="#main">Skip to content</a>
+<div class="app">
+  <aside class="sidenav" id="sidenav"></aside>
+  <div class="content">
+    <header class="pagehead" id="pagehead"></header>
+    <div class="two-col">
+      <main id="main" class="main-col" tabindex="-1">
+        <section id="auth" class="card" hidden></section>
+        <section id="start" class="card" hidden>
+          <h2 id="startTitle"></h2>
+          <p class="muted" id="startIntro"></p>
+          <p id="resume" class="muted" hidden></p>
+          <div class="modes" role="radiogroup" id="modes"></div>
+          <div class="actions">
+            <button class="btn" id="startBtn" type="button"></button>
+            <button class="btn secondary" id="resetBtn" type="button"></button>
+          </div>
+        </section>
+        <section id="quiz" hidden>
+          <div class="qcard" id="qBody"></div>
+          <div id="feedback" class="feedback" hidden role="status" aria-live="polite"></div>
+          <p class="muted" id="keyHint"></p>
+          <div class="footbar">
+            <div class="progress"><i id="footProgress"></i></div>
+            <div class="inner">
+              <button class="btn secondary small" id="finishBtn" type="button"></button>
+              <span id="footCount"></span>
+              <span class="row"><button class="btn small" id="nextBtn" type="button" hidden></button><button class="btn small" id="submitBtn" type="button" disabled></button></span>
+            </div>
+          </div>
+        </section>
+        <section id="qualify" hidden>
+          <div id="setCards" class="main-col"></div>
+          <div class="footbar">
+            <div class="progress"><i id="setProgress"></i></div>
+            <div class="inner"><span class="timer" id="setTimer"></span><span id="setCount"></span><button class="btn small" id="setSubmit" type="button"></button></div>
+          </div>
+        </section>
+        <section id="summary" class="card" hidden>
+          <h2 id="sumTitle"></h2>
+          <p class="muted" id="sumNote"></p>
+          <div class="stats" id="sumStats"></div>
+          <h2 class="small" id="sumModulesTitle"></h2>
+          <div id="sumBars" class="main-col"></div>
+          <div id="sumRefsWrap" hidden><h2 class="small" id="sumRefsTitle"></h2><ul class="refs" id="sumRefs"></ul></div>
+          <div class="actions"><button class="btn" id="againBtn" type="button"></button></div>
+        </section>
+      </main>
+      <section class="card" id="pit"></section>
+      <aside class="rail">
+
+      </aside>
+    </div>
+  </div>
+</div>
+<script src="/engine.js"></script>
+<script src="/nav.js"></script>
+<script src="/shell.js"></script>
+<script src="/moderators.js"></script>
+<script src="/coach.js"></script>
+<script src="/bank/tips.js"></script>
+<script src="/catalog.js"></script>
+<script src="/bank/math-mcq.js"></script>
+<script src="/math.js"></script>
+<script src="/vendor/katex/katex.min.js"></script>
+<script src="/config.js"></script>
+<script src="/usernames.js"></script>
+<script src="/backend.js"></script>
+<script src="/app.js"></script>
+<script src="/pit.js"></script>
+<script src="/quiz-page.js"></script>
+</body>
+</html>

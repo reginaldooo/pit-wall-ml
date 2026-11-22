@@ -42,6 +42,10 @@ npm test           # 125 tests
 
 Edit `notes/machine_learning_deep_learning_nlp_notes.md`, then `npm run build:learn` (in `app/`) to regenerate the Learn pages.
 
+## Live
+
+https://pit-wall-ml.vercel.app (Vercel free plan + Supabase free plan, project `pit-wall-ml`).
+
 ## Deploy
 
 Static site on Vercel (free plan) with Supabase (free plan) for accounts and saved progress. In Vercel set the **Root Directory to `app`**. Full steps are in [app/README.md](app/README.md#setup-and-deploy-supabase-free-plan--vercel-free-plan).

@@ -1,5 +1,5 @@
 /* Supabase backend: Auth (username mapped to a private email), progress and attempts tables protected by
-   Row Level Security, and the leaderboard() function. See supabase/schema.sql. */
+   Row Level Security, and the leaderboard() function. See supabase/migrations/20261122000000_schema.sql. */
 (function () {
   'use strict'
   const U = window.Usernames

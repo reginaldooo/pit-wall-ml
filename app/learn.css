@@ -3,7 +3,7 @@
 .footnote { color: var(--muted); font-size: .875rem; margin: 32px 0 0; }
 
 /* ---- article shell: the contents live in the sidebar, so the article gets the full column ---- */
-.shell { display: block; max-width: 1180px; padding: 0 0 48px; }
+.shell { display: block; max-width: 1400px; margin: 0 auto; padding: 0 0 48px; }
 .shell > main { min-width: 0; }
 
 /* ---- article ---- */
@@ -52,7 +52,7 @@ article h1 { font-size: clamp(1.6rem, 1.25rem + 1.6vw, 2.25rem); line-height: 1.
 @media (min-width: 640px) { .pager { grid-template-columns: 1fr 1fr; } }
 
 /* ---- course home ---- */
-.home-main { max-width: 1240px; margin: 0; padding: 8px 0 64px; }
+.home-main { max-width: 1400px; margin: 0 auto; padding: 8px 0 64px; }
 .hero { padding: 8px 0 8px; }
 .hero h1 { font-size: clamp(1.9rem, 1.4rem + 2.4vw, 3.375rem); line-height: 1.2; margin: 0 0 12px; font-weight: 300; }
 .hero p { max-width: 62ch; color: var(--muted); font-size: 1.0625rem; margin: 0 0 16px; }

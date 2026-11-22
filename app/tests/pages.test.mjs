@@ -32,6 +32,8 @@ test('every page loads its scripts in a working order and each referenced file e
     const markup = read(html)
     const srcs = [...markup.matchAll(/<script src="([^"]+)"/g)].map((m) => m[1])
     for (const src of srcs) assert.ok(fs.existsSync(path.join(root, src)), `${html}: ${src} missing`)
+    const tags = [...markup.matchAll(/<script [^>]*src="[^"]+"[^>]*>/g)].map((m) => m[0])
+    for (const tag of tags) assert.match(tag, /\sdefer[\s>]/, `${html}: ${tag} must be deferred so it does not block rendering`)
     const order = (name) => srcs.indexOf(name)
     assert.ok(order('/engine.js') < order('/app.js'), `${html}: engine before app`)
     assert.ok(order('/moderators.js') < order('/app.js'), `${html}: moderators before app`)
@@ -56,7 +58,7 @@ test('every nav entry points to an existing page', () => {
   }
 })
 
-test('CSP allows the Arena (Pyodide CDN) and Supabase, and no other remote origin', () => {
+test('CSP allows the Arena (Pyodide CDN) and Supabase, and no other remote origin (plus F1 headshots for img-src)', () => {
   const config = JSON.parse(read('vercel.json'))
   const csp = config.headers[0].headers.find((h) => h.key === 'Content-Security-Policy').value
   assert.match(csp, /script-src[^;]*wasm-unsafe-eval/)
@@ -64,7 +66,7 @@ test('CSP allows the Arena (Pyodide CDN) and Supabase, and no other remote origi
   assert.match(csp, /connect-src[^;]*https:\/\/cdn\.jsdelivr\.net/)
   assert.match(csp, /connect-src[^;]*https:\/\/\*\.supabase\.co/)
   const hosts = [...csp.matchAll(/https?:\/\/[^\s;]+/g)].map((m) => m[0])
-  assert.deepEqual([...new Set(hosts)].sort(), ['https://*.supabase.co', 'https://cdn.jsdelivr.net'])
+  assert.deepEqual([...new Set(hosts)].sort(), ['https://*.supabase.co', 'https://cdn.jsdelivr.net', 'https://media.formula1.com'])
   assert.match(csp, /frame-ancestors 'none'/)
 })
 

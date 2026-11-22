@@ -283,7 +283,14 @@
 
   // ---------- pit wall (see pit.js) ----------
   function avatar(person) {
-    return el('span', { class: 'avatar', style: `background:${Mod.color(person)}`, 'aria-hidden': 'true', text: Mod.initials(person) })
+    const node = el('span', { class: 'avatar', style: `background:${Mod.color(person)}`, 'aria-hidden': 'true', text: Mod.initials(person) })
+    if (person.photo) {
+      // The photo covers the initials; if it fails to load it removes itself and the initials show.
+      const img = el('img', { src: person.photo, alt: '', width: '48', height: '48', loading: 'lazy', decoding: 'async', referrerpolicy: 'no-referrer' })
+      img.addEventListener('error', () => img.remove())
+      node.append(img)
+    }
+    return node
   }
 
   const renderPit = (container) => { container.hidden = false; if (window.App.pit) window.App.pit.mount(container) }

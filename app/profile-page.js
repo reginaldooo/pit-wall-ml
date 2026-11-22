@@ -9,7 +9,7 @@
   const $ = (id) => document.getElementById(id)
   const Q = {
       title: 'Profile', next: (n, xp) => `${xp} XP to ${n}`, top: 'Top rank reached', stats: { answered: 'Quiz answers', math: 'Math answers', solved: 'Arena solved', streak: 'Day streak', gear: 'Quiz gear' },
-      hostTitle: 'Choose your host (team principal)', mateTitle: 'Choose your teammate (driver)', season: (y) => `Grid ${y}. Fan-made roleplay, not endorsed by anyone. Edit moderators.js if the grid changes.`,
+      hostTitle: 'Choose your host (team principal)', mateTitle: 'Choose your teammate (driver)', season: (y) => `Grid ${y}. Fan-made roleplay in each person's public style: not real quotes, not endorsed by anyone. Photos are from OpenF1.`,
       settings: 'Settings', optOut: 'Hide me from the leaderboard', export: 'Download backup', import: 'Restore backup', badFile: 'That file is not a valid backup.', restored: 'Backup restored.',
   }
   const q = () => Q
@@ -30,11 +30,15 @@
         stat(q().stats.streak, Math.max(engine.dayStreak, math.dayStreak)), stat(q().stats.gear, engine.level)))
   }
 
+  // Builds each button once; a pick only flips aria-pressed so the avatars and photos are not rebuilt.
   function picker(role, key, container, titleId, title) {
     $(titleId).textContent = title
-    container.replaceChildren(...Mod.roster.filter((p) => p.role === role).map((p) => el('button', {
-      class: 'pick', type: 'button', 'aria-pressed': String(App.store.prefs[key] === p.id), onclick: () => { App.setPrefs({ [key]: p.id }); render() },
-    }, App.avatar(p), el('span', {}, el('b', { text: p.name }), el('small', { text: p.team })))))
+    if (!container.childElementCount) {
+      container.replaceChildren(...Mod.roster.filter((p) => p.role === role).map((p) => el('button', {
+        class: 'pick', type: 'button', 'data-id': p.id, onclick: () => { App.setPrefs({ [key]: p.id }); render() },
+      }, App.avatar(p), el('span', {}, el('b', { text: p.name }), el('small', { text: p.team }), el('small', { class: 'trait', text: p.trait })))))
+    }
+    for (const button of container.children) button.setAttribute('aria-pressed', String(App.store.prefs[key] === button.dataset.id))
   }
 
   const DEFAULT_STYLE = { hostStyle: 'strategist', mateStyle: 'hype' }

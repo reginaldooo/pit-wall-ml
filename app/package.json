@@ -9,7 +9,8 @@
     "build:learn": "node scripts/build-learn.mjs",
     "check:learn": "node scripts/build-learn.mjs --check",
     "build:problems": "python3 scripts/build-problems.py",
-    "build:catalog": "node scripts/build-catalog.mjs"
+    "build:catalog": "node scripts/build-catalog.mjs",
+    "build:headshots": "node scripts/fetch-headshots.mjs"
   },
   "engines": {
     "node": "22.x"

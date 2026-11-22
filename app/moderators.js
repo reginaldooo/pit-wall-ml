@@ -1,16 +1,23 @@
 // Moderators: a fan-made roleplay layer. Pick a team principal as host and a driver as teammate.
-// Lines are generic pit-wall coaching, not quotes from real people. Colours are generated, not team liveries,
-// and there are no photos or logos. The roster is plain data: edit it when the grid changes.
+// Each person has a persona in personas.js (original lines in their public style, never real quotes). Photos, when
+// present, come from headshots.js (OpenF1 driver headshots, hotlinked); everyone falls back to initials on a signature
+// colour. The roster is plain data: edit it when the grid changes.
 ;(function (root, factory) {
-  if (typeof module === 'object' && module.exports) module.exports = factory()
-  else root.Moderators = factory()
-})(typeof self !== 'undefined' ? self : this, function () {
+  if (typeof module === 'object' && module.exports) module.exports = factory(require('./personas.js'), require('./headshots.js'))
+  else root.Moderators = factory(root.Personas, root.Headshots)
+})(typeof self !== 'undefined' ? self : this, function (personas, headshots) {
   const ROSTER_SEASON = 2026
-  const person = (name, team, role) => ({ id: name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''), name, team, role })
+  const slug = (name) => name.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+  const person = (name, team, role) => {
+    const id = slug(name)
+    const persona = (personas || {})[id] || {}
+    return { id, name, team, role, accent: persona.accent || null, trait: persona.trait || '', photo: (headshots || {})[id] || null }
+  }
   const roster = [
     person('Toto Wolff', 'Mercedes', 'principal'), person('Fred Vasseur', 'Ferrari', 'principal'), person('Laurent Mekies', 'Red Bull', 'principal'),
     person('Andrea Stella', 'McLaren', 'principal'), person('James Vowles', 'Williams', 'principal'), person('Ayao Komatsu', 'Haas', 'principal'),
-    person('Jonathan Wheatley', 'Audi', 'principal'), person('Graeme Lowdon', 'Cadillac', 'principal'), person('Alan Permane', 'Racing Bulls', 'principal'),
+    person('Jonathan Wheatley', 'Audi', 'principal'), person('Marcin Budkowski', 'Cadillac', 'principal'), person('Alan Permane', 'Racing Bulls', 'principal'),
+    person('Adrian Newey', 'Aston Martin', 'principal'), person('Flavio Briatore', 'Alpine', 'principal'),
     person('George Russell', 'Mercedes', 'driver'), person('Kimi Antonelli', 'Mercedes', 'driver'), person('Charles Leclerc', 'Ferrari', 'driver'),
     person('Lewis Hamilton', 'Ferrari', 'driver'), person('Max Verstappen', 'Red Bull', 'driver'), person('Isack Hadjar', 'Red Bull', 'driver'),
     person('Lando Norris', 'McLaren', 'driver'), person('Oscar Piastri', 'McLaren', 'driver'), person('Fernando Alonso', 'Aston Martin', 'driver'),
@@ -84,15 +91,17 @@
     return h >>> 0
   }
 
+  const lineBank = (id) => ((personas || {})[id] || {}).lines || {}
   const byId = (id) => roster.find((p) => p.id === id) || null
   const initials = (p) => p.name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase()
-  // Generated colour: stable per person, not a team livery.
-  const color = (p) => `hsl(${hash(p.id) % 360} 52% 38%)`
+  // Signature colour from the persona; a stable generated one for anyone without a persona.
+  const color = (p) => p.accent || `hsl(${hash(p.id) % 360} 52% 38%)`
 
   // Picks a line for an event. `turn` rotates through the variants so repeats feel fresh but stay deterministic.
   function say(event, personId, turn = 0) {
     const p = byId(personId) || byId(DEFAULTS.host)
-    const options = (LINES[event] || LINES.welcome)[p.role]
+    const own = lineBank(p.id)[event]
+    const options = own && own.length ? own : (LINES[event] || LINES.welcome)[p.role]
     return options[(hash(p.id) + turn) % options.length]
   }
 

@@ -4,6 +4,7 @@ import { createRequire } from 'node:module'
 
 const require = createRequire(import.meta.url)
 const Mod = require('../moderators.js')
+const Personas = require('../personas.js')
 
 test('roster ids are unique and roles are valid', () => {
   const ids = Mod.roster.map((p) => p.id)
@@ -38,8 +39,36 @@ test('say is deterministic and falls back for unknown ids and events', () => {
   assert.ok(Mod.say('unknown-event', 'lando-norris').length > 0)
 })
 
-test('avatars use generated colours and initials, not external assets', () => {
+test('avatars show initials on a signature colour; photos are optional', () => {
   const p = Mod.byId('lando-norris')
   assert.equal(Mod.initials(p), 'LN')
-  assert.match(Mod.color(p), /^hsl\(\d+ 52% 38%\)$/)
+  assert.equal(Mod.color(p), p.accent)
+  assert.match(Mod.color({ id: 'nobody', accent: null }), /^hsl\(\d+ 52% 38%\)$/)
+  for (const q of Mod.roster) assert.ok(q.photo === null || /^https:\/\/media\.formula1\.com\//.test(q.photo), q.id)
+})
+
+test('every person has a persona with an accent, a trait and their own lines', () => {
+  const required = ['welcome', 'correct', 'wrong', 'streak3', 'streak5', 'levelUp', 'rankUp', 'solved', 'timeout']
+  for (const p of Mod.roster) {
+    assert.match(p.accent || '', /^#[0-9a-f]{6}$/i, `${p.id} accent`)
+    assert.ok(p.trait.length > 10, `${p.id} trait`)
+    const own = Personas[p.id].lines
+    for (const event of required) assert.ok(own[event] && own[event].length >= 1 && own[event].every((l) => l.trim()), `${p.id}/${event}`)
+    assert.ok(own.correct.length >= 2 && own.wrong.length >= 2, `${p.id} varied lines`)
+  }
+  for (const id of Object.keys(Personas)) assert.ok(Mod.byId(id), `persona without roster entry: ${id}`)
+})
+
+test('say uses the persona line and people sound different from each other', () => {
+  assert.ok(Personas['max-verstappen'].lines.correct.includes(Mod.say('correct', 'max-verstappen', 0)))
+  const voices = new Set(Mod.roster.map((p) => Mod.say('wrong', p.id, 0)))
+  assert.equal(voices.size, Mod.roster.length)
+  assert.ok(Mod.LINES.hint.driver.includes(Mod.say('hint', 'max-verstappen', 0)))
+})
+
+test('roster reflects the current grid', () => {
+  assert.ok(Mod.byId('marcin-budkowski'))
+  assert.equal(Mod.byId('graeme-lowdon'), null)
+  const teams = new Set(Mod.roster.filter((p) => p.role === 'principal').map((p) => p.team))
+  assert.equal(teams.size, 11)
 })

@@ -1,8 +1,7 @@
-tests
-README.md
-.vercel
-supabase
-scripts
-docs
-node_modules
+/README.md
+/supabase
+/scripts
+/docs
+/tests
+/node_modules
 .env*
